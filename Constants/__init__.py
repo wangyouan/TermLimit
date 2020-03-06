@@ -12,6 +12,8 @@ from .path_info import PathInfo
 class Constants(PathInfo):
     GVKEY = 'gvkey'
     COUNTRY = 'country'
+    COUNTRY_ISO3 = 'country_iso3'
+    COUNTRY_ISO3N = 'country_iso3n'
     YEAR = 'year'
     CIK = 'cik'
     CURRENCY = 'ioscur'
