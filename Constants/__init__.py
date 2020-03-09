@@ -15,6 +15,7 @@ class Constants(PathInfo):
     COUNTRY_ISO3 = 'country_iso3'
     COUNTRY_ISO3N = 'country_iso3n'
     YEAR = 'year'
+    MONTH = 'month'
     CIK = 'cik'
     CURRENCY = 'ioscur'
     SIC = 'sic_code'
