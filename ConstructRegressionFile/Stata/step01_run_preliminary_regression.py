@@ -30,7 +30,7 @@ if __name__ == '__main__':
         for lag in range(5):
             real_ind = '{}_{}'.format(ind_key, lag + 1) if lag != 0 else ind_key
             output_file = os.path.join(output_path, '{}.txt'.format(real_ind))
-            for dep in ['CAPEX', 'R_B', 'ROA', 'LEVERAGE', 'CASH_HOLDING', 'TANGIBILITY', 'TobinQ']:
+            for dep in ['CAPEX', 'R_B', 'ROA', 'LEVERAGE', 'CASH_HOLDING', 'TANGIBILITY', 'TobinQ', 'ln_emp']:
                 real_dep = "{}_1".format(dep)
 
                 cmd_list.append('capture qui reghdfe {dep} {ind} {ctrl}, absorb(gvkey fyear) cl(gvkey)'.format(
@@ -39,6 +39,7 @@ if __name__ == '__main__':
                     'outreg2 using {output_file}, addtext({output_text}) {dataconfig} nolabel append'.format(
                         output_file=output_file, output_text='Firm Dummy, Yes, Year Dummy, Yes, Cluster, Firm',
                         dataconfig='tstat bdec(4) tdec(4) rdec(4)'))
+                cmd_list.append('')
 
     with open(save_file, 'w') as f:
         f.write('\n'.join(cmd_list))
