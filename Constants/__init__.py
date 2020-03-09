@@ -19,3 +19,6 @@ class Constants(PathInfo):
     CIK = 'cik'
     CURRENCY = 'ioscur'
     SIC = 'sic_code'
+
+    FORMAL = 'formal'
+    REAL = 'real'
