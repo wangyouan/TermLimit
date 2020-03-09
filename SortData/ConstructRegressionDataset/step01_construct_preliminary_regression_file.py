@@ -42,7 +42,7 @@ if __name__ == '__main__':
     reg_df3: DataFrame = reg_df2.drop(['do'], axis=1).rename(columns={'Latitude (average)': 'loc_lat',
                                                                       'Longitude (average)': 'loc_lon'})
 
-    for key in ['formal_Extend', 'real_Extend', 'formal_Shirk', 'real_Shirk']:
+    for key in ['formal_Extend', 'real_Extend', 'formal_Shrink', 'real_Shrink']:
         reg_df3.loc[:, key] = reg_df3[key].fillna(0)
         country_year_df: DataFrame = reg_df3.loc[reg_df3[key] == 1, [const.COUNTRY_ISO3N, 'fyear']].drop_duplicates()
         for lag in range(1, 5):
