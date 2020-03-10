@@ -74,6 +74,7 @@ if __name__ == '__main__':
 
     ctat_df.loc[:, 'ln_sale'] = ctat_df['sale'].apply(np.log)
     ctat_df.loc[:, 'ln_emp'] = ctat_df['emp'].apply(np.log)
+    ctat_df: DataFrame = ctat_df.replace([np.inf, -np.inf], np.nan)
     for key in ['ln_emp', 'ln_sale']:
         ctat_df.loc[ctat_df[key].notnull(), key] = winsorize(ctat_df[key].dropna(), (0.01, 0.01))
 
