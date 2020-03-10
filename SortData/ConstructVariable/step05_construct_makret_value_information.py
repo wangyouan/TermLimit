@@ -45,4 +45,4 @@ if __name__ == '__main__':
     ctat_df_prc.loc[:, 'TobinQ'] = (ctat_df_prc['at'] + ctat_df_prc['mkvalt'] - ctat_df_prc['ceq']) / ctat_df_prc['at']
 
     ctat_df_prc_valid: DataFrame = ctat_df_prc.replace([np.inf, -np.inf], np.nan)
-    ctat_df_prc_valid.to_pickle(os.path.join(const.TEMP_PATH, '20190309_regression_control_variables.pkl'))
+    ctat_df_prc_valid.to_pickle(os.path.join(const.TEMP_PATH, '20200309_regression_control_variables.pkl'))

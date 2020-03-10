@@ -19,7 +19,7 @@ from scipy.stats.mstats import winsorize
 from Constants import Constants as const
 
 if __name__ == '__main__':
-    ctat_df: DataFrame = pd.read_pickle(os.path.join(const.TEMP_PATH, '20190309_regression_control_variables.pkl'))
+    ctat_df: DataFrame = pd.read_pickle(os.path.join(const.TEMP_PATH, '20200309_regression_control_variables.pkl'))
     ann_df: DataFrame = pd.read_pickle(os.path.join(const.TEMP_PATH, '20200309_annual_event_data.pkl')).rename(
         columns={'EventYear': 'fyear'})
 
@@ -29,6 +29,8 @@ if __name__ == '__main__':
 
     for key in dep_vars:
         ctat_df.loc[ctat_df[key].notnull(), key] = winsorize(ctat_df[key].dropna(), (0.01, 0.01))
+
+    ctat_df.to_pickle(os.path.join(const.TEMP_PATH, '20200310_regression_control_variables_winsorized.pkl'))
 
     ctat_df.loc[:, const.COUNTRY_ISO3] = ctat_df['loc']
     reg_df: DataFrame = ctat_df.merge(ann_df, on=['fyear', const.COUNTRY_ISO3], how='left')
