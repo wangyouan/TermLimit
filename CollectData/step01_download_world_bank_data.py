@@ -40,7 +40,24 @@ if __name__ == '__main__':
         indicator_list = wbdata.get_indicator(source=source_id, display=False)
         source_indicator_dfs = list()
         for indicator_info in tqdm(indicator_list):
+            indicator_info_dict = info_dict.copy()
             indicator_id = indicator_info['id']
+            indicator_info_dict['IndicatorID'] = indicator_id
+            indicator_info_dict['IndicatorName'] = indicator_info['name']
+
+            for key in ['sourceOrganization', 'sourceNote']:
+                if key in indicator_info:
+                    indicator_info_dict[key] = indicator_info[key]
+
+            tmp_df: DataFrame = indicator_index_df.loc[indicator_index_df['IndicatorID'] == indicator_id]
+            if not tmp_df.empty:
+                tmp_source_id = tmp_df.iloc[0]['SourceID']
+                tmp_save_path = os.path.join(output_path, tmp_source_id)
+                for key in ['SourceName', 'SourceID']:
+                    indicator_info_dict[key] = tmp_df.iloc[0][key]
+                indicator_index_df: DataFrame = indicator_index_df.append(indicator_info_dict, ignore_index=True)
+                continue
+
             save_file_path = os.path.join(save_path, '{}.pkl'.format(indicator_id))
             if os.path.isfile(save_file_path):
                 indicator_df = pd.read_pickle(save_file_path)
@@ -50,16 +67,10 @@ if __name__ == '__main__':
                 indicator_df.to_pickle(os.path.join(save_path, '{}.pkl'.format(indicator_id)))
                 time.sleep(random.randint(1, 10))
 
-            indicator_info_dict = info_dict.copy()
-            indicator_info_dict['IndicatorID'] = indicator_id
-            indicator_info_dict['IndicatorName'] = indicator_info['name']
-            for key in ['sourceOrganization', 'sourceNote']:
-                if key in indicator_info:
-                    indicator_info_dict[key] = indicator_info[key]
-
             source_indicator_dfs.append(indicator_df)
             indicator_index_df: DataFrame = indicator_index_df.append(indicator_info_dict, ignore_index=True)
         source_df: DataFrame = pd.concat(source_indicator_dfs, axis=1)
         source_df.to_pickle(os.path.join(output_path, '{}.pkl'.format(source_id)))
 
+    indicator_index_df.to_pickle(os.path.join(output_path, '20200311_indicator_index.pkl'))
     indicator_index_df.to_excel(os.path.join(output_path, '20200311_indicator_index.xlsx'), index=False)
