@@ -48,6 +48,7 @@ if __name__ == '__main__':
                 indicator_df: DataFrame = wbdata.get_data(quote(indicator_id), country='all', pandas=True,
                                                           column_name=indicator_id).dropna()
                 indicator_df.to_pickle(os.path.join(save_path, '{}.pkl'.format(indicator_id)))
+                time.sleep(random.randint(1, 10))
 
             indicator_info_dict = info_dict.copy()
             indicator_info_dict['IndicatorID'] = indicator_id
@@ -58,7 +59,6 @@ if __name__ == '__main__':
 
             source_indicator_dfs.append(indicator_df)
             indicator_index_df: DataFrame = indicator_index_df.append(indicator_info_dict, ignore_index=True)
-            time.sleep(random.randint(1, 10))
         source_df: DataFrame = pd.concat(source_indicator_dfs, axis=1)
         source_df.to_pickle(os.path.join(output_path, '{}.pkl'.format(source_id)))
 

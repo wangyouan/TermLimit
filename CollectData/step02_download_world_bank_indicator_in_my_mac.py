@@ -39,6 +39,6 @@ if __name__ == '__main__':
                     indicator_info_dict[key] = indicator_info[key]
 
             indicator_index_df: DataFrame = indicator_index_df.append(indicator_info_dict, ignore_index=True)
-            time.sleep(random.randint(1, 10))
+        time.sleep(random.randint(1, 10))
 
     indicator_index_df.to_excel(os.path.join(save_path, '20200311_indicator_information.xlsx'), index=False)
