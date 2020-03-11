@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
             source_indicator_dfs.append(indicator_df)
             indicator_index_df: DataFrame = indicator_index_df.append(indicator_info_dict, ignore_index=True)
-            time.sleep(random.randint(10))
+            time.sleep(random.randint(1, 10))
         source_df: DataFrame = pd.concat(source_indicator_dfs, axis=1)
         source_df.to_pickle(os.path.join(output_path, '{}.pkl'.format(source_id)))
 
