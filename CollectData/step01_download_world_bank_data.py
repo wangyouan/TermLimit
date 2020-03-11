@@ -11,6 +11,8 @@ python -m CollectData.step01_download_world_bank_data
 """
 
 import os
+import time
+import random
 from urllib.parse import quote
 
 from tqdm import tqdm
@@ -56,6 +58,7 @@ if __name__ == '__main__':
 
             source_indicator_dfs.append(indicator_df)
             indicator_index_df: DataFrame = indicator_index_df.append(indicator_info_dict, ignore_index=True)
+            time.sleep(random.randint(10))
         source_df: DataFrame = pd.concat(source_indicator_dfs, axis=1)
         source_df.to_pickle(os.path.join(output_path, '{}.pkl'.format(source_id)))
 
