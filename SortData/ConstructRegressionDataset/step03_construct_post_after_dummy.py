@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
     # Remove invalid countries
     reg_df_drop: DataFrame = reg_df.loc[~reg_df['loc'].isin({'GNQ', 'TGO', 'TKM', 'SRB'})].copy()
-    key_list = [('AZE', 2003), ('BRA', 1993), ('COM', 1991)]
+    key_list = [('AZE', 2003), ('BRA', 1993), ('COM', 1991), ('PER', 2001)]
     for iso3, year in key_list:
         reg_df_drop: DataFrame = reg_df_drop.loc[(reg_df_drop['loc'] != iso3) | (reg_df_drop['fyear'] >= year)].copy()
 
