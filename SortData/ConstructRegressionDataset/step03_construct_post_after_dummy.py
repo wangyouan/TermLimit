@@ -28,7 +28,7 @@ if __name__ == '__main__':
     # ann_df.to_excel(os.path.join(const.RESULT_PATH, '20200310_annual_event_data.xlsx'), index=False)
     useful_keys = ['country_iso3', 'EventYear', 'formal_Extend', 'formal_ToUnlimit', 'formal_ToLimit', 'formal_Shrink',
                    'real_Extend', 'real_ToUnlimit', 'real_ToLimit', 'real_Shrink']
-    ann_df_useful = ann_df.loc[:, [useful_keys]].copy()
+    ann_df_useful = ann_df.loc[:, useful_keys].copy()
     result_df: DataFrame = ann_df_useful.copy()
 
     # construct t + 1 dummy and n dummy
@@ -39,7 +39,7 @@ if __name__ == '__main__':
         tmp_df: DataFrame = ann_df_useful.copy()
         tmp_df.loc[:, 'EventYear'] += real_lag
         tmp_df_t: DataFrame = tmp_df.rename(columns=t_keys_dict)
-        result_df: DataFrame = result_df.append(tmp_df_t, ignore_index=True)
+        result_df: DataFrame = result_df.append(tmp_df_t, ignore_index=True, sort=False)
 
         n_dfs = list()
         for i in range(real_lag + 1):
@@ -47,7 +47,7 @@ if __name__ == '__main__':
             tmp_df2.loc[:, 'EventYear'] += i
             n_dfs.append(tmp_df2)
 
-        tmp_df_n: DataFrame = pd.concat(n_dfs, ignore_index=True)
+        tmp_df_n: DataFrame = pd.concat(n_dfs, ignore_index=True, sort=False)
         result_df: DataFrame = result_df.append(tmp_df_n, ignore_index=True)
 
     # Construct t - n dummy
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         tmp_df: DataFrame = ann_df_useful.copy()
         tmp_df.loc[:, 'EventYear'] -= lag
         tmp_df_t: DataFrame = tmp_df.rename(columns=t_keys_dict)
-        result_df: DataFrame = result_df.append(tmp_df_t, ignore_index=True)
+        result_df: DataFrame = result_df.append(tmp_df_t, ignore_index=True, sort=False)
 
     event_df: DataFrame = result_df.sort_values(['country_iso3', 'EventYear']).fillna(0).rename(
         columns={'EventYear': const.FISCAL_YEAR})
@@ -96,6 +96,7 @@ if __name__ == '__main__':
         reg_df_drop: DataFrame = reg_df_drop.loc[(reg_df_drop['loc'] != iso3) | (reg_df_drop['fyear'] >= year)].copy()
 
     reg_df_drop2: DataFrame = reg_df_drop.loc[(reg_df_drop['loc'] != 'LBN') | (reg_df_drop['fyear'] <= 2004)].copy()
+    reg_df_drop2.to_pickle(os.path.join(const.TEMP_PATH, '20200315_full_regression_data.pkl'))
     valid_reg_df: DataFrame = reg_df_drop2.loc[reg_df_drop2['fyear'] < 2011].drop(['do'], axis=1)
     for key in ['addzip']:
         valid_reg_df.loc[:, key] = valid_reg_df[key].astype(str)
