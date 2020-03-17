@@ -31,6 +31,7 @@ if __name__ == '__main__':
         subset=[const.COUNTRY_ISO3])
     country_info_df.loc[:, const.COUNTRY_ISO3N] = country_info_df[const.COUNTRY_ISO3N].str.strip('" ').astype(int)
     country_info_df.loc[:, const.COUNTRY_ISO3] = country_info_df[const.COUNTRY_ISO3].str.strip('" ').astype(str)
+    country_info_df.to_pickle(os.path.join(const.TEMP_PATH, '20200316_country_info_list.pkl'))
 
     country_year_summary2: DataFrame = reg_df_country_df2.merge(country_info_df, on=[const.COUNTRY_ISO3], how='left')
     country_year_summary2.to_excel(os.path.join(const.RESULT_PATH, '20200315_country_year_event_list.xlsx'),
