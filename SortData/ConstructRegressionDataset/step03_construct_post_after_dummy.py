@@ -20,7 +20,7 @@ from scipy.stats.mstats import winsorize
 from Constants import Constants as const
 
 if __name__ == '__main__':
-    ann_df: DataFrame = pd.read_excel(os.path.join(const.DATA_PATH, '20200310_annual_event_data.xlsx'))
+    ann_df: DataFrame = pd.read_excel(os.path.join(const.DATA_PATH, '20200317_annual_event_data.xlsx'))
     # for key in ['real_last_term', 'real_current_term', 'real_Extend', 'real_ToUnlimit', 'real_ToLimit', 'real_Shrink']:
     #     ann_df.loc[14, key] = ann_df.loc[15, key]
     #
