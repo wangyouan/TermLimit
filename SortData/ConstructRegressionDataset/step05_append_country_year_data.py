@@ -47,6 +47,9 @@ if __name__ == '__main__':
     valid_cy_df.loc[:, 'ln_CO2'] = valid_cy_df['EN.ATM.CO2E.KT'].apply(np.log)
     valid_cy_df.loc[:, 'ln_GHG'] = valid_cy_df['EN.ATM.GHGT.KT.CE'].apply(np.log)
     valid_cy_df.loc[:, const.FISCAL_YEAR] = valid_cy_df['Year'].astype(int)
+    valid_cy_df = valid_cy_df.loc[:, ~valid_cy_df.columns.duplicated()]
+
+    valid_cy_df.to_pickle(os.path.join(const.TEMP_PATH, '20200320_country_year_data.pkl'))
 
     reg_df: DataFrame = pd.read_pickle(os.path.join(const.TEMP_PATH, '20200311_regression_data_with_count.pkl'))
     reg_df_with_cy: DataFrame = reg_df.merge(valid_cy_df.drop(['Country', 'Year'], axis=1),
