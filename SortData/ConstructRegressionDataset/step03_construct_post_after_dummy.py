@@ -91,11 +91,12 @@ if __name__ == '__main__':
 
     # Remove invalid countries
     reg_df_drop: DataFrame = reg_df.loc[~reg_df['loc'].isin({'GNQ', 'TGO', 'TKM', 'SRB'})].copy()
-    key_list = [('AZE', 2003), ('BRA', 1993), ('COM', 1991), ('PER', 2001)]
+    key_list = [('AZE', 2003), ('BRA', 1995), ('COM', 1991), ('PER', 2001)]
     for iso3, year in key_list:
         reg_df_drop: DataFrame = reg_df_drop.loc[(reg_df_drop['loc'] != iso3) | (reg_df_drop['fyear'] >= year)].copy()
 
-    reg_df_drop2: DataFrame = reg_df_drop.loc[(reg_df_drop['loc'] != 'LBN') | (reg_df_drop['fyear'] <= 2004)].copy()
+    reg_df_drop2 = reg_df_drop.copy()
+    # reg_df_drop2: DataFrame = reg_df_drop.loc[(reg_df_drop['loc'] != 'LBN') | (reg_df_drop['fyear'] < 2004)].copy()
     reg_df_drop2.to_pickle(os.path.join(const.TEMP_PATH, '20200315_full_regression_data.pkl'))
     valid_reg_df: DataFrame = reg_df_drop2.loc[reg_df_drop2['fyear'] < 2011].drop(['do'], axis=1)
     for key in ['addzip']:
