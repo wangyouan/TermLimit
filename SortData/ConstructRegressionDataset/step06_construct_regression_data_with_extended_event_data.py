@@ -70,6 +70,11 @@ if __name__ == '__main__':
 
         columns=lambda x: x.replace('.', '_'))
     reg_df_with_cy2: DataFrame = reg_df_with_cy.drop(['do', 'addzip', 'county'], axis=1)
+    real_formal_keys = [i for i in reg_df_with_cy2.keys() if i.startswith('formal') or i.startswith('real')]
+    for key in real_formal_keys:
+        if 'term' in key:
+            continue
+        reg_df_with_cy2.loc[:, key] = reg_df_with_cy2[key].fillna(0)
     reg_df_with_cy2.to_pickle(os.path.join(const.TEMP_PATH, '20200320_term_limit_regression_data.pkl'))
     reg_df_with_cy2.to_stata(os.path.join(const.STATA_DATA_PATH, '20200320_term_limit_regression_data.dta'),
                              write_index=False)
