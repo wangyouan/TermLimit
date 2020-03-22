@@ -18,7 +18,7 @@ from .step02_rerun_preliminary_regression import generate_regression_code
 DEP_VARS = ['{}_1'.format(i) for i in
             ['CAPEX', 'ROA', 'R_B', 'CASH_HOLDING', 'TANGIBILITY', 'TobinQ', 'ln_emp', 'ln_sale']]
 
-CTRL_VARS = 'ln_at SGA TANGIBILITY CAPEX ROA ln_GDP ln_GDP_PC NY_GDP_MKTP_KD_ZG'
+CTRL_VARS = 'ln_at TANGIBILITY CAPEX ROA TobinQ ln_GDP ln_GDP_PC NY_GDP_MKTP_KD_ZG FR_INR_LNDP'
 
 if __name__ == '__main__':
     ind_vars = list()
@@ -33,8 +33,8 @@ if __name__ == '__main__':
             ind_vars.append(' '.join(ind_list))
 
     date_str = '20200320'
-    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_3.do'.format(date_str))
-    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_3'.format(date_str))
+    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_4.do'.format(date_str))
+    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_4'.format(date_str))
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
 
@@ -48,9 +48,9 @@ if __name__ == '__main__':
         output_file = os.path.join(output_path, '{}.txt'.format(key_info))
         for dep_key in DEP_VARS:
             cmd_list.extend(
-                generate_regression_code(dep=dep_key, ind=ind_key, ctrl=CTRL_VARS, fe_option='country_fe fyear',
-                                         cluster_option='country_fe', output_path=output_file, condition='',
-                                         text_option='Country Dummy, Yes, Year Dummy, Yes, Cluster, Country',
+                generate_regression_code(dep=dep_key, ind=ind_key, ctrl=CTRL_VARS, fe_option='gvkey fyear',
+                                         cluster_option='gvkey', output_path=output_file, condition='',
+                                         text_option='Firm Dummy, Yes, Year Dummy, Yes, Cluster, Firm',
                                          data_description='tstat bdec(4) tdec(4) rdec(4)'))
 
     with open(save_file, 'w') as f:
