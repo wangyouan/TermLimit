@@ -30,6 +30,7 @@ if __name__ == '__main__':
     output_path = os.path.join(const.DATABASE_PATH, 'WorldBank')
     indicator_index_df = DataFrame(columns=['SourceID', 'SourceName', 'IndicatorID', 'IndicatorName',
                                             'sourceOrganization', 'sourceNote'])
+    error_indicator_list = list()
     for source_info in source_list:
         source_id = source_info['id']
         save_path = os.path.join(output_path, source_id)
@@ -68,13 +69,14 @@ if __name__ == '__main__':
                     indicator_df.to_pickle(os.path.join(save_path, '{}.pkl'.format(indicator_id)))
                     time.sleep(random.randint(1, 10))
                 except Exception as e:
-                    print(indicator_id)
-                    raise Exception(e)
+                    error_indicator_list.append(indicator_id)
+                    continue
 
             source_indicator_dfs.append(indicator_df)
             indicator_index_df: DataFrame = indicator_index_df.append(indicator_info_dict, ignore_index=True)
         source_df: DataFrame = pd.concat(source_indicator_dfs, axis=1)
         source_df.to_pickle(os.path.join(output_path, '{}.pkl'.format(source_id)))
 
-    indicator_index_df.to_pickle(os.path.join(output_path, '20200311_indicator_index.pkl'))
-    indicator_index_df.to_excel(os.path.join(output_path, '20200311_indicator_index.xlsx'), index=False)
+    indicator_index_df.to_pickle(os.path.join(output_path, '20200324_indicator_index.pkl'))
+    indicator_index_df.to_excel(os.path.join(output_path, '20200324_indicator_index.xlsx'), index=False)
+    pd.to_pickle(error_indicator_list, os.path.join(const.TEMP_PATH, '20200324_error_loading_indicator_list.pkl'))
