@@ -62,10 +62,14 @@ if __name__ == '__main__':
             if os.path.isfile(save_file_path):
                 indicator_df = pd.read_pickle(save_file_path)
             else:
-                indicator_df: DataFrame = wbdata.get_data(quote(indicator_id), country='all', pandas=True,
-                                                          column_name=indicator_id).dropna()
-                indicator_df.to_pickle(os.path.join(save_path, '{}.pkl'.format(indicator_id)))
-                time.sleep(random.randint(1, 10))
+                try:
+                    indicator_df: DataFrame = wbdata.get_data(quote(indicator_id), country='all', pandas=True,
+                                                              column_name=indicator_id).dropna()
+                    indicator_df.to_pickle(os.path.join(save_path, '{}.pkl'.format(indicator_id)))
+                    time.sleep(random.randint(1, 10))
+                except Exception as e:
+                    print(indicator_id)
+                    raise Exception(e)
 
             source_indicator_dfs.append(indicator_df)
             indicator_index_df: DataFrame = indicator_index_df.append(indicator_info_dict, ignore_index=True)
