@@ -17,12 +17,14 @@ from Constants import Constants as const
 from .step02_rerun_preliminary_regression import generate_regression_code
 from .step04_rerun_preliminary_regression_for_presidential_countries import DEP_VARS
 
-CTRL_VARS = 'ln_at TANGIBILITY CAPEX ROA ln_GDP ln_GDP_PC NY_GDP_MKTP_KD_ZG SL_UEM_TOTL_ZS ln_POPULATION NE_IMP_GNFS_ZS'
+CTRL_VARS = ' '.join(
+    ['ln_at', 'TANGIBILITY', 'CAPEX', 'ROA', 'ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS',
+     'ln_POPULATION', 'NE_IMP_GNFS_ZS', 'NE_EXP_GNFS_ZS'])
 
 if __name__ == '__main__':
-    date_str = '20200320'
-    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_5.do'.format(date_str))
-    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_5'.format(date_str))
+    date_str = '20200324'
+    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_1.do'.format(date_str))
+    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_1'.format(date_str))
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
 
@@ -36,7 +38,7 @@ if __name__ == '__main__':
             ind_vars.append('{}_{}'.format(pre, suf))
 
     for ind_key in ind_vars:
-        for lag in range(5):
+        for lag in [2]:
             real_key = '{}_{}'.format(ind_key, lag + 1) if lag != 0 else ind_key
             output_file = os.path.join(output_path, '{}.txt'.format(real_key))
             for dep_key in DEP_VARS:
