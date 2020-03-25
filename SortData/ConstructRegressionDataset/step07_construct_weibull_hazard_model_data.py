@@ -33,6 +33,8 @@ COUNTRY_CTRLS = ['NV_IND_TOTL_ZS', 'NE_EXP_GNFS_KN', 'NV_IND_MANF_KD_ZG', 'BX_KL
 if __name__ == '__main__':
     reg_df: DataFrame = pd.read_stata(os.path.join(const.STATA_DATA_PATH, '20200320_term_limit_regression_data.dta'))
     reg_df.loc[:, 'R_B0_1'] = reg_df['R_B_1'].fillna(0)
+    reg_df.loc[:, 'ln_IMPORT'] = reg_df['NE_IMP_GNFS_CD'].apply(np.log)
+    reg_df.loc[:, 'ln_EXPORT'] = reg_df['NE_EXP_GNFS_CD'].apply(np.log)
     valid_reg_df: DataFrame = reg_df.loc[reg_df['is_presidential'] == 1].copy()
     valid_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200324_term_limit_regression_data.dta'), version=117,
                           write_index=False)
@@ -48,7 +50,5 @@ if __name__ == '__main__':
     wh_reg_df: DataFrame = country_year_df.merge(country_level_ctrl.reset_index(drop=False),
                                                  on=[const.COUNTRY_ISO3, const.FISCAL_YEAR], how='inner').merge(
         dep_average_df.reset_index(drop=False), on=[const.COUNTRY_ISO3, const.FISCAL_YEAR], how='inner')
-    wh_reg_df.loc[:, 'ln_IMPORT'] = wh_reg_df['NE_IMP_GNFS_CD'].apply(np.log)
-    wh_reg_df.loc[:, 'ln_EXPORT'] = wh_reg_df['NE_EXP_GNFS_CD'].apply(np.log)
     wh_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200324_weibull_harzard_model_data.dta'),
                        write_index=False, version=117)
