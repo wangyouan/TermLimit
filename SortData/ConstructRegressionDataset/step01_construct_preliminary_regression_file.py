@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     dep_vars = ['ln_at', 'CAPEX', 'EBITDA', 'PTBI', 'R_B', 'SGA', 'VOL_PTBI',
                 'VOL_EBITDA', 'ROA', 'LEVERAGE', 'CASH_HOLDING', 'TANGIBILITY',
-                'MV', 'TobinQ']
+                'MV', 'TobinQ', 'CASH_RATIO']
 
     for key in dep_vars:
         ctat_df.loc[ctat_df[key].notnull(), key] = winsorize(ctat_df[key].dropna(), (0.01, 0.01))

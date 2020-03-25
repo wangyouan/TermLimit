@@ -32,14 +32,14 @@ def generate_foreach2_dep_code(dep, ind, ctrl, fe_option, cluster_option, output
             'foreach ind_var in {}{{'.format(ind),
             "capture qui reghdfe `dep_var' `ind_var' {ctrl} {condition}, absorb({fe}) cl({cl})".format(
                 dep=dep, ctrl=ctrl, fe=fe_option, cl=cluster_option, condition=condition),
-            'outreg2 using "{output_file}", addtext({output_text}) {dataconfig} nolabel append'.format(
+            'qui outreg2 using "{output_file}", addtext({output_text}) {dataconfig} nolabel append'.format(
                 output_file=output_path, output_text=text_option,
                 dataconfig=data_description),
             '}\n}\n']
 
 
 if __name__ == '__main__':
-    date_str = '20200325'
+    date_str = '20200326'
     save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_1.do'.format(date_str))
     output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_1'.format(date_str))
     if not os.path.isdir(output_path):
@@ -52,15 +52,18 @@ if __name__ == '__main__':
     ind_vars = list()
     for suf in ['Extend', 'ToUnlimit', 'ToLimit', 'Shrink']:
         for pre in ['formal', 'real']:
-            ind_vars.append('{}_{}'.format(pre, suf))
+            ind_vars.append('{}_{}_3'.format(pre, suf))
 
     for i, ctrl_info in enumerate(CTRL_LIST):
         output_file = os.path.join(output_path, 'ctrl_test_{}.xls'.format(i))
+        real_ctrl = ['ln_at', 'TANGIBILITY', 'CAPEX', 'ROA']
+        real_ctrl.extend(ctrl_info)
 
-        cmd_list.extend(generate_foreach2_dep_code(DEP_VARS, DEP_VARS, ' '.join(ctrl_info), fe_option='gvkey fyear',
-                                                   cluster_option='gvkey', output_path=output_file, condition='',
-                                                   text_option='Firm Dummy, Yes, Year Dummy, Yes, Cluster, Firm',
-                                                   data_description='tstat bdec(4) tdec(4) rdec(4)'))
+        cmd_list.extend(
+            generate_foreach2_dep_code(DEP_VARS, ' '.join(ind_vars), ' '.join(real_ctrl), fe_option='gvkey fyear',
+                                       cluster_option='gvkey', output_path=output_file, condition='',
+                                       text_option='Firm Dummy, Yes, Year Dummy, Yes, Cluster, Firm',
+                                       data_description='tstat bdec(4) tdec(4) rdec(4)'))
 
     with open(save_file, 'w') as f:
         f.write('\n'.join(cmd_list))
