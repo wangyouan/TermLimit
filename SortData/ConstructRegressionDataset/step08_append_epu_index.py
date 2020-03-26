@@ -23,5 +23,6 @@ if __name__ == '__main__':
         os.path.join(const.DATABASE_PATH, 'PolicyUncertainty', 'epu_index.pkl')).rename(
         columns={'country': const.COUNTRY_ISO3, const.YEAR: const.FISCAL_YEAR})
     reg_df_epu: DataFrame = reg_df.merge(epu_index, on=[const.COUNTRY_ISO3, const.FISCAL_YEAR], how='left')
+    reg_df_epu.loc[:, 'MV_1'] = reg_df.groupby(const.GVKEY)['MV'].shift(1)
     reg_df_epu.to_stata(os.path.join(const.STATA_DATA_PATH, '20200326_term_limit_regression_data2.dta'),
                         write_index=False, version=117)
