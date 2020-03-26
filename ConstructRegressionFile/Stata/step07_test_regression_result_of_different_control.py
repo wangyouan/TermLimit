@@ -21,9 +21,9 @@ CTRL_LIST = [['ln_GDP', 'ln_GDP_PC', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_TOTL_ZS']
              ['ln_GDP', 'ln_GDP_PC', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_MANF_ZS', 'SL_UEM_TOTL_ZS'],
              ['ln_GDP', 'ln_GDP_PC', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_MANF_ZS'],
              ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_TOTL_ZS'],
-             ['ln_GDP', 'ln_GDP_PC', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_TOTL_ZS', 'SL_UEM_TOTL_ZS'],
+             ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_TOTL_ZS', 'SL_UEM_TOTL_ZS'],
              ]
-DEP_VARS = 'TobinQ_1 TANGIBILITY_1 ROA_1 R_B0_1 CASH_HOLDING_1 CAPEX_1 ln_sale_1 ln_emp_1 CASH_RATIO_1'
+DEP_VARS = 'TobinQ_1 TANGIBILITY_1 ROA_1 R_B0_1 CASH_HOLDING_1 CAPEX_1 ln_sale_1 ln_emp_1 CASH_RATIO_1 SALE_RATIO_1'
 
 
 def generate_foreach2_dep_code(dep, ind, ctrl, fe_option, cluster_option, output_path, text_option,
@@ -40,13 +40,13 @@ def generate_foreach2_dep_code(dep, ind, ctrl, fe_option, cluster_option, output
 
 if __name__ == '__main__':
     date_str = '20200326'
-    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_1.do'.format(date_str))
-    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_1'.format(date_str))
+    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_2.do'.format(date_str))
+    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_2'.format(date_str))
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
 
     cmd_list = ['clear',
-                'use "{}"'.format(os.path.join(const.STATA_DATA_PATH, '20200324_term_limit_regression_data.dta')),
+                'use "{}"'.format(os.path.join(const.STATA_DATA_PATH, '20200326_term_limit_regression_data.dta')),
                 ]
 
     ind_vars = list()
@@ -54,7 +54,7 @@ if __name__ == '__main__':
         for pre in ['formal', 'real']:
             ind_vars.append('{}_{}_3'.format(pre, suf))
 
-    for i, ctrl_info in enumerate(CTRL_LIST):
+    for i, ctrl_info in enumerate(CTRL_LIST[-1:]):
         output_file = os.path.join(output_path, 'ctrl_test_{}.xls'.format(i))
         real_ctrl = ['ln_at', 'TANGIBILITY', 'CAPEX', 'ROA']
         real_ctrl.extend(ctrl_info)
