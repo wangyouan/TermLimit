@@ -70,7 +70,7 @@ if __name__ == '__main__':
     ctat_df: DataFrame = pd.read_pickle(
         os.path.join(const.TEMP_PATH, '20200310_regression_control_variables_winsorized.pkl'))
     dep_vars = ['ln_at', 'CAPEX', 'EBITDA', 'PTBI', 'ROA', 'R_B', 'SGA', 'LEVERAGE', 'CASH_HOLDING', 'TANGIBILITY',
-                'TobinQ', 'ln_emp', 'ln_sale']
+                'TobinQ', 'ln_emp', 'ln_sale', 'SALE_RATIO', 'CASH_RATIO']
 
     ctat_df.loc[:, 'ln_sale'] = ctat_df['sale'].apply(np.log)
     ctat_df.loc[:, 'ln_emp'] = ctat_df['emp'].apply(np.log)

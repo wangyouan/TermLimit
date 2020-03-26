@@ -47,5 +47,6 @@ if __name__ == '__main__':
     ctat_df.loc[:, 'CASH_HOLDING'] = ctat_df['che'] / ctat_df['lag_at']
     ctat_df.loc[:, 'TANGIBILITY'] = ctat_df['ppent'] / ctat_df['lag_at']
     ctat_df.loc[:, 'CASH_RATIO'] = ctat_df['ch'] / ctat_df['lag_at']
+    ctat_df.loc[:, 'SALE_RATIO'] = ctat_df['sale'] / ctat_df['lag_at']
 
     ctat_df.to_pickle(os.path.join(const.TEMP_PATH, '20200309_ctat_global_all_ctrl_vars.pkl'))

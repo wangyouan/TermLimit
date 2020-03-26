@@ -23,7 +23,7 @@ CTRL_LIST = [['ln_GDP', 'ln_GDP_PC', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_TOTL_ZS']
              ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_TOTL_ZS'],
              ['ln_GDP', 'ln_GDP_PC', 'ln_IMPORT', 'ln_EXPORT', 'NV_IND_TOTL_ZS', 'SL_UEM_TOTL_ZS'],
              ]
-DEP_VARS = 'TobinQ_1 TANGIBILITY_1 ROA_1 R_B0_1 CASH_HOLDING_1 CAPEX_1 ln_sale_1 ln_emp_1'
+DEP_VARS = 'TobinQ_1 TANGIBILITY_1 ROA_1 R_B0_1 CASH_HOLDING_1 CAPEX_1 ln_sale_1 ln_emp_1 CASH_RATIO_1'
 
 
 def generate_foreach2_dep_code(dep, ind, ctrl, fe_option, cluster_option, output_path, text_option,

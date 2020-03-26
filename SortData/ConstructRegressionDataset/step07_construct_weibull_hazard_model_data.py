@@ -17,7 +17,6 @@ import pandas as pd
 from pandas import DataFrame
 
 from Constants import Constants as const
-from ConstructRegressionFile.Stata.step04_rerun_preliminary_regression_for_presidential_countries import DEP_VARS
 
 COUNTRY_CTRLS = ['NV_IND_TOTL_ZS', 'NE_EXP_GNFS_KN', 'NV_IND_MANF_KD_ZG', 'BX_KLT_DINV_WD_GD_ZS', 'NV_IND_MANF_ZS',
                  'NY_GDP_MKTP_KD', 'NY_GDP_MKTP_KD_ZG', 'ln_GDP', 'NY_GDS_TOTL_ZS', 'NV_AGR_TOTL_KD_ZG',
@@ -29,15 +28,19 @@ COUNTRY_CTRLS = ['NV_IND_TOTL_ZS', 'NE_EXP_GNFS_KN', 'NV_IND_MANF_KD_ZG', 'BX_KL
                  'NV_AGR_TOTL_KD', 'NE_IMP_GNFS_ZS', 'NE_EXP_GNFS_KD_ZG', 'NE_IMP_GNFS_CD', 'ln_POPULATION',
                  'NV_IND_TOTL_KD', 'SL_UEM_TOTL_ZS', 'NE_EXP_GNFS_CN', 'NE_EXP_GNFS_KD', 'NV_IND_MANF_KD',
                  'NE_IMP_GNFS_KD', 'IC_BUS_DFRN_XQ']
+DEP_VARS = ['{}_1'.format(i) for i in
+            ['CAPEX', 'ROA', 'R_B0', 'CASH_HOLDING', 'TANGIBILITY', 'TobinQ', 'ln_emp', 'ln_sale', 'CASH_RATIO',
+             'SALE_RATIO']]
 
 if __name__ == '__main__':
-    reg_df: DataFrame = pd.read_stata(os.path.join(const.STATA_DATA_PATH, '20200320_term_limit_regression_data.dta'))
-    reg_df.loc[:, 'R_B0_1'] = reg_df['R_B_1'].fillna(0)
-    reg_df.loc[:, 'ln_IMPORT'] = reg_df['NE_IMP_GNFS_CD'].apply(np.log)
-    reg_df.loc[:, 'ln_EXPORT'] = reg_df['NE_EXP_GNFS_CD'].apply(np.log)
-    valid_reg_df: DataFrame = reg_df.loc[reg_df['is_presidential'] == 1].copy()
-    valid_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200324_term_limit_regression_data.dta'), version=117,
-                          write_index=False)
+    reg_df: DataFrame = pd.read_stata(os.path.join(const.STATA_DATA_PATH, '20200326_term_limit_regression_data.dta'))
+    # reg_df.loc[:, 'R_B0_1'] = reg_df['R_B_1'].fillna(0)
+    # reg_df.loc[:, 'ln_IMPORT'] = reg_df['NE_IMP_GNFS_CD'].apply(np.log)
+    # reg_df.loc[:, 'ln_EXPORT'] = reg_df['NE_EXP_GNFS_CD'].apply(np.log)
+    # valid_reg_df: DataFrame = reg_df.loc[reg_df['is_presidential'] == 1].copy()
+    # valid_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200324_term_limit_regression_data.dta'), version=117,
+    #                       write_index=False)
+    valid_reg_df = reg_df
     country_year_df: DataFrame = valid_reg_df.loc[:,
                                  [const.COUNTRY_ISO3, const.FISCAL_YEAR, 'has_event']].drop_duplicates()
     country_year_df.loc[:, 'post_event'] = country_year_df['has_event'].replace(0, np.nan)
@@ -50,5 +53,5 @@ if __name__ == '__main__':
     wh_reg_df: DataFrame = country_year_df.merge(country_level_ctrl.reset_index(drop=False),
                                                  on=[const.COUNTRY_ISO3, const.FISCAL_YEAR], how='inner').merge(
         dep_average_df.reset_index(drop=False), on=[const.COUNTRY_ISO3, const.FISCAL_YEAR], how='inner')
-    wh_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200324_weibull_harzard_model_data.dta'),
+    wh_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200326_weibull_harzard_model_data.dta'),
                        write_index=False, version=117)
