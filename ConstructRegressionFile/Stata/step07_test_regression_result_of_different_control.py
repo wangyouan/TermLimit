@@ -42,13 +42,13 @@ def generate_foreach2_dep_code(dep, ind, ctrl, fe_option, cluster_option, output
 
 if __name__ == '__main__':
     date_str = '20200326'
-    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_4.do'.format(date_str))
-    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_4'.format(date_str))
+    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_5.do'.format(date_str))
+    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_5'.format(date_str))
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
 
     cmd_list = ['clear',
-                'use "{}"'.format(os.path.join(const.STATA_DATA_PATH, '20200326_term_limit_regression_data.dta')),
+                'use "{}"'.format(os.path.join(const.STATA_DATA_PATH, '20200326_term_limit_regression_data2.dta')),
                 ]
 
     # for suf in ['Extend', 'ToUnlimit', 'ToLimit', 'Shrink']:
@@ -60,7 +60,7 @@ if __name__ == '__main__':
         for pre in ['formal', 'real']:
             ind_vars = ['{}_{}_3'.format(pre, suf) for suf in ind_list]
             output_file = os.path.join(output_path, 'ctrl_test_{}_{}.xls'.format(pre, i))
-            real_ctrl = ['ln_at', 'TANGIBILITY', 'CAPEX', 'ROA']
+            real_ctrl = ['ln_at', 'LEVERAGE', 'LOSS', 'SGA', 'FOREIGN', 'EBITDA']
             real_ctrl.extend(ctrl_info)
 
             cmd_list.extend(

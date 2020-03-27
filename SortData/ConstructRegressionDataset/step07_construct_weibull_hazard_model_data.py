@@ -30,10 +30,10 @@ COUNTRY_CTRLS = ['NV_IND_TOTL_ZS', 'NE_EXP_GNFS_KN', 'NV_IND_MANF_KD_ZG', 'BX_KL
                  'NE_IMP_GNFS_KD', 'IC_BUS_DFRN_XQ']
 DEP_VARS = ['{}_1'.format(i) for i in
             ['CAPEX', 'ROA', 'R_B0', 'CASH_HOLDING', 'TANGIBILITY', 'TobinQ', 'ln_emp', 'ln_sale', 'CASH_RATIO',
-             'SALE_RATIO']]
+             'SALE_RATIO', 'MV']]
 
 if __name__ == '__main__':
-    reg_df: DataFrame = pd.read_stata(os.path.join(const.STATA_DATA_PATH, '20200326_term_limit_regression_data.dta'))
+    reg_df: DataFrame = pd.read_stata(os.path.join(const.STATA_DATA_PATH, '20200326_term_limit_regression_data2.dta'))
     # reg_df.loc[:, 'R_B0_1'] = reg_df['R_B_1'].fillna(0)
     # reg_df.loc[:, 'ln_IMPORT'] = reg_df['NE_IMP_GNFS_CD'].apply(np.log)
     # reg_df.loc[:, 'ln_EXPORT'] = reg_df['NE_EXP_GNFS_CD'].apply(np.log)
@@ -53,5 +53,5 @@ if __name__ == '__main__':
     wh_reg_df: DataFrame = country_year_df.merge(country_level_ctrl.reset_index(drop=False),
                                                  on=[const.COUNTRY_ISO3, const.FISCAL_YEAR], how='inner').merge(
         dep_average_df.reset_index(drop=False), on=[const.COUNTRY_ISO3, const.FISCAL_YEAR], how='inner')
-    wh_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200326_weibull_harzard_model_data.dta'),
+    wh_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200326_weibull_harzard_model_data2.dta'),
                        write_index=False, version=117)
