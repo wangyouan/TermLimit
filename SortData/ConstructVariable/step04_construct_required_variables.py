@@ -48,5 +48,9 @@ if __name__ == '__main__':
     ctat_df.loc[:, 'TANGIBILITY'] = ctat_df['ppent'] / ctat_df['lag_at']
     ctat_df.loc[:, 'CASH_RATIO'] = ctat_df['ch'] / ctat_df['lag_at']
     ctat_df.loc[:, 'SALE_RATIO'] = ctat_df['sale'] / ctat_df['lag_at']
+    ctat_df.loa[:, 'EMP_RATIO'] = ctat_df['emp'] / ctat_df['lag_at']
+    ctat_df.loc[:, 'ln_sale'] = ctat_df['sale'].apply(np.log)
+    ctat_df.loc[:, 'ln_emp'] = ctat_df['emp'].apply(np.log)
 
-    ctat_df.to_pickle(os.path.join(const.TEMP_PATH, '20200309_ctat_global_all_ctrl_vars.pkl'))
+    # ctat_df.to_pickle(os.path.join(const.TEMP_PATH, '20200309_ctat_global_all_ctrl_vars.pkl'))
+    ctat_df.to_pickle(os.path.join(const.TEMP_PATH, '20200331_ctat_global_all_ctrl_vars.pkl'))
