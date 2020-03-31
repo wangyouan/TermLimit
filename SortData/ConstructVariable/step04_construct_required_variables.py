@@ -48,7 +48,7 @@ if __name__ == '__main__':
     ctat_df.loc[:, 'TANGIBILITY'] = ctat_df['ppent'] / ctat_df['lag_at']
     ctat_df.loc[:, 'CASH_RATIO'] = ctat_df['ch'] / ctat_df['lag_at']
     ctat_df.loc[:, 'SALE_RATIO'] = ctat_df['sale'] / ctat_df['lag_at']
-    ctat_df.loa[:, 'EMP_RATIO'] = ctat_df['emp'] / ctat_df['lag_at']
+    ctat_df.loc[:, 'EMP_RATIO'] = ctat_df['emp'] / ctat_df['lag_at']
     ctat_df.loc[:, 'ln_sale'] = ctat_df['sale'].apply(np.log)
     ctat_df.loc[:, 'ln_emp'] = ctat_df['emp'].apply(np.log)
 
