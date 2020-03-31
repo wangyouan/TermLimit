@@ -59,7 +59,7 @@ if __name__ == '__main__':
     for i, ctrl_info in enumerate(CTRL_LIST):
         for pre in ['formal', 'real']:
             ind_vars = ['{}_{}_3'.format(pre, suf) for suf in ind_list]
-            output_file = os.path.join(output_path, 'ctrl_test_{}_{}.xls'.format(pre, i))
+            output_file = os.path.join(output_path, 'ctrl_test_{}_{}.xls'.format(i, pre))
             real_ctrl = ['ln_at', 'LEVERAGE', 'LOSS', 'SGA', 'FOREIGN', 'EBITDA']
             real_ctrl.extend(ctrl_info)
 
