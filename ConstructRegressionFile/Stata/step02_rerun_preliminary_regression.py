@@ -13,6 +13,7 @@ python -m SortData.ConstructVariable.step02_rerun_preliminary_regression
 import os
 
 from Constants import Constants as const
+from Utilities.generate_stata_code import generate_regression_code
 
 IND_VARS = [' '.join(
     ['formal_Extend_tm3', 'formal_Extend_tm2', 'formal_Extend_tm1', 'formal_Extend', 'formal_Extend_t1',
@@ -43,16 +44,6 @@ IND_VARS = [' '.join(
 DEP_VARS = ['{}_1'.format(i) for i in ['CAPEX', 'EBITDA', 'PTBI', 'ROA', 'R_B', 'LEVERAGE', 'CASH_HOLDING',
                                        'TANGIBILITY', 'TobinQ', 'ln_emp', 'ln_sale']]
 CTRL_VARS = 'ln_at SGA TANGIBILITY CAPEX FOREIGN PTBI VOL_PTBI'
-
-
-def generate_regression_code(dep, ind, ctrl, fe_option, cluster_option, output_path, text_option, data_description,
-                             condition=''):
-    return ['capture qui reghdfe {dep} {ind} {ctrl} {condition}, absorb({fe}) cl({cl})'.format(
-        dep=dep, ind=ind, ctrl=ctrl, fe=fe_option, cl=cluster_option, condition=condition),
-        'outreg2 using "{output_file}", addtext({output_text}) {dataconfig} nolabel append'.format(
-            output_file=output_path, output_text=text_option,
-            dataconfig=data_description), '']
-
 
 if __name__ == '__main__':
     date_str = '20200310'
