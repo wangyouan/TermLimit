@@ -32,7 +32,7 @@ FIRM_CTRL_LIST = ['ln_at', 'LEVERAGE', 'LOSS', 'SGA', 'FOREIGN', 'EBITDA']
 DEP_VARS = 'CAPEX_1 R_B0_1 TANGIBILITY_1 ROA_1 SALE_RATIO_1 EMP_RATIO_1 ln_sale_1 ln_emp_1 TobinQ_1 MV_1'
 
 if __name__ == '__main__':
-    date_str = '20200331'
+    date_str = '20200407'
     save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_1.do'.format(date_str))
     output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_1'.format(date_str))
     if not os.path.isdir(output_path):
