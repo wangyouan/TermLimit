@@ -22,9 +22,9 @@ FIRM_CTRL_LIST = ['ln_at', 'LEVERAGE', 'LOSS', 'SGA', 'EBITDA']
 DEP_VARS = 'CAPEX_1 R_B0_1 TANGIBILITY_1 ROA_1 SALE_RATIO_1 EMP_RATIO_1 ln_sale_1 ln_emp_1 TobinQ_1 MV_1'
 
 if __name__ == '__main__':
-    date_str = '20200331'
-    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_5.do'.format(date_str))
-    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_2'.format(date_str))
+    date_str = '20200407'
+    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_1.do'.format(date_str))
+    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_1'.format(date_str))
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
 
@@ -32,10 +32,10 @@ if __name__ == '__main__':
                 'use "{}"'.format(os.path.join(const.STATA_DATA_PATH, '20200331_term_limit_regression_data.dta')),
                 ]
 
-    ind_list = ['Extend', 'ToUnlimit', 'Shrink', 'ToLimit']
+    ind_list = ['Extend', 'Shrink']
 
     for i, ctrl_info in enumerate(COUNTRY_CTRL_LIST):
-        for pre in ['formal', 'real']:
+        for pre in ['formal']:
             for suf in ind_list:
                 output_file = os.path.join(output_path, 'ctrl_test_{}_{}_{}.xls'.format(i, pre, suf))
                 ind_vars = '{}_{}'.format(pre, suf)
