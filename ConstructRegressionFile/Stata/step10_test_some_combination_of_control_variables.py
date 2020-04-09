@@ -17,12 +17,19 @@ from Utilities.generate_stata_code import generate_foreach2_dep_ind_code
 
 COUNTRY_CTRL_LIST = [['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG'],
                      ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG'],
-                     ['ln_GDP_PC', 'NE_IMP_GNFS_ZS', 'NE_EXP_GNFS_ZS', 'NY_GDP_MKTP_KD_ZG'],
-                     ['ln_GDP', 'ln_GDP_PC', 'NE_IMP_GNFS_ZS', 'NE_EXP_GNFS_ZS', 'NY_GDP_MKTP_KD_ZG'],
-                     ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'NE_IMP_GNFS_ZS', 'NE_EXP_GNFS_ZS', 'NV_IND_TOTL_ZS'],
-                     ['ln_GDP', 'ln_GDP_PC', 'NE_IMP_GNFS_ZS', 'NE_EXP_GNFS_ZS', 'NV_IND_TOTL_ZS'],
+                     ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'NE_IMP_GNFS_ZS', 'NE_EXP_GNFS_ZS'],
+                     ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'NE_IMP_GNFS_ZS', 'NE_EXP_GNFS_ZS'],
+                     ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'NV_IND_TOTL_ZS'],
+                     ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'NV_IND_TOTL_ZS'],
                      ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS'],
+                     ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'FR_INR_RINR'],
+                     ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'FR_INR_RINR'],
+                     ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'FR_INR_LNDP'],
+                     ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'FR_INR_LNDP'],
+                     ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS'],
                      ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'FP_CPI_TOTL_ZG'],
+                     ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'FP_CPI_TOTL_ZG', 'FR_INR_LNDP'],
+                     ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'FP_CPI_TOTL_ZG', 'FR_INR_LNDP'],
                      ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'FP_CPI_TOTL_ZG'],
                      ['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'NV_IND_TOTL_ZS', 'FP_CPI_TOTL_ZG'],
                      ['ln_GDP', 'ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG', 'SL_UEM_TOTL_ZS', 'NV_IND_TOTL_ZS', 'FP_CPI_TOTL_ZG'],
@@ -30,25 +37,20 @@ COUNTRY_CTRL_LIST = [['ln_GDP_PC', 'NY_GDP_MKTP_KD_ZG'],
 FIRM_CTRL_LIST = [['ln_at', 'LEVERAGE', 'LOSS', 'SGA', 'FOREIGN', 'EBITDA'],
                   ['ln_at', 'LEVERAGE', 'ROA'],
                   ['ln_at', 'LEVERAGE', 'TobinQ'],
-                  ['ln_at', 'LEVERAGE', 'ln_emp', 'ROA', 'LOSS'],
-                  ['ln_at', 'LEVERAGE', 'SALE_RATIO', 'TobinQ', 'TANGIBILITY'],
-                  ['ln_at', 'LEVERAGE', 'SALE_RATIO', 'TobinQ', 'TANGIBILITY', 'LOSS', 'FOREIGN'],
-                  ['ln_at', 'LEVERAGE', 'SALE_RATIO', 'TobinQ', 'TANGIBILITY', 'LOSS', 'FOREIGN_EXPO'],
+                  ['ln_at', 'LEVERAGE', 'SGA', 'FOREIGN_EXPO', 'EBITDA'],
                   ['ln_at', 'LEVERAGE', 'LOSS', 'SGA', 'FOREIGN_EXPO', 'EBITDA'],
                   ['ln_at', 'LEVERAGE', 'LOSS', 'SGA', 'FOREIGN_EXPO', 'ROA'],
                   ['ln_at', 'LEVERAGE', 'LOSS', 'SGA', 'FOREIGN', 'ROA'],
-                  ['ln_at', 'LEVERAGE', 'LOSS', 'ln_sale', 'FOREIGN', 'ROA'],
-                  ['ln_at', 'LEVERAGE', 'LOSS', 'ln_sale', 'FOREIGN', 'PTBI'],
-                  ['ln_at', 'LEVERAGE', 'LOSS', 'ln_sale', 'FOREIGN', 'PTBI', 'CASH_HOLDING'],
-                  ['ln_at', 'LEVERAGE', 'LOSS', 'ln_sale', 'FOREIGN', 'ROA', 'CASH_HOLDING'],
+                  ['ln_at', 'LEVERAGE', 'LOSS', 'FOREIGN', 'ROA', 'CASH_HOLDING'],
+                  ['ln_at', 'LEVERAGE', 'FOREIGN', 'ROA', 'CASH_HOLDING'],
                   ['ln_at', 'LEVERAGE', 'LOSS', 'FOREIGN', 'ROA', 'CASH_RATIO'],
                   ]
 DEP_VARS = 'CAPEX_1 R_B0_1 TANGIBILITY_1 ROA_1 SALE_RATIO_1 EMP_RATIO_1 ln_sale_1 ln_emp_1 TobinQ_1 MV_1'
 
 if __name__ == '__main__':
-    date_str = '20200407'
-    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_3.do'.format(date_str))
-    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_3'.format(date_str))
+    date_str = '20200409'
+    save_file = os.path.join(const.STATA_CODE_PATH, '{}_preliminary_code_1.do'.format(date_str))
+    output_path = os.path.join(const.STATA_RESULT_PATH, '{}_preliminary_1'.format(date_str))
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
 
@@ -70,7 +72,8 @@ if __name__ == '__main__':
                 cmd_list.extend(
                     generate_foreach2_dep_ind_code(DEP_VARS, ' '.join(ind_vars), ' '.join(real_ctrl),
                                                    fe_option='gvkey fyear',
-                                                   cluster_option='gvkey', output_path=output_file, condition='',
+                                                   cluster_option='gvkey', output_path=output_file,
+                                                   condition='if indfmt != "FS"',
                                                    text_option='Firm Dummy, Yes, Year Dummy, Yes, Cluster, Firm',
                                                    data_description='tstat bdec(4) tdec(4) rdec(4)'))
             i += 1
