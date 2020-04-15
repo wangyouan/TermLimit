@@ -65,9 +65,9 @@ if __name__ == '__main__':
         for i in range(1, 6):
             country_reg_df.loc[:, '{}_{}'.format(key, i)] = country_group[key].shift(i)
 
-        country_reg_df.loc['{}_post3'] = country_reg_df[
+        country_reg_df.loc[:, '{}_post3'.format(key)] = country_reg_df[
             [key, '{}_1'.format(key), '{}_2'.format(key), '{}_3'.format(key)]].sum(axis=1)
-        country_reg_df.loc['{}_post5'] = country_reg_df[
+        country_reg_df.loc[:, '{}_post5'.format(key)] = country_reg_df[
             [key, '{}_1'.format(key), '{}_2'.format(key), '{}_3'.format(key), '{}_4'.format(key),
              '{}_5'.format(key)]].sum(axis=1)
 
