@@ -59,17 +59,15 @@ if __name__ == '__main__':
     for key in next_year_keys:
         country_reg_df.loc[:, '{}_1'.format(key)] = shift_one_year[key]
 
-    # Construct post3 and post5 dummy
+    # Construct post dummy
     country_group = country_reg_df.groupby(const.COUNTRY_ISO3)
     for key in valid_keys[2:]:
+        i_keys = [key]
         for i in range(1, 6):
-            country_reg_df.loc[:, '{}_{}'.format(key, i)] = country_group[key].shift(i)
-
-        country_reg_df.loc[:, '{}_post3'.format(key)] = country_reg_df[
-            [key, '{}_1'.format(key), '{}_2'.format(key), '{}_3'.format(key)]].sum(axis=1)
-        country_reg_df.loc[:, '{}_post5'.format(key)] = country_reg_df[
-            [key, '{}_1'.format(key), '{}_2'.format(key), '{}_3'.format(key), '{}_4'.format(key),
-             '{}_5'.format(key)]].sum(axis=1)
+            i_key = '{}_{}'.format(key, i)
+            country_reg_df.loc[:, i_key] = country_group[key].shift(i)
+            i_keys.append(i_key)
+            country_reg_df.loc[:, '{}_post{}'.format(key, i)] = country_reg_df.loc[:, i_keys].sum(axis=1)
 
     country_reg_df.to_stata(os.path.join(const.STATA_DATA_PATH, '20200415_country_year_reg_data.dta'),
                             write_index=False)
