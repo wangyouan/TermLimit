@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# @Filename: step07_construct_country_level_regression_file
+# @Filename: step10_construct_country_level_regression_file
 # @Date: 2020/4/15
 # @Author: Mark Wang
 # @Email: wangyouan@gamil.com
 
 """
-python -m SortData.ConstructRegressionDataset.step07_construct_country_level_regression_file
+python -m SortData.ConstructRegressionDataset.step10_construct_country_level_regression_file
 """
 
 import os
