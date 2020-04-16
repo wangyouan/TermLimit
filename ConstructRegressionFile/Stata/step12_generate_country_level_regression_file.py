@@ -20,7 +20,7 @@ from Utilities.generate_stata_code import generate_foreach2_dep_ind_code
 
 if __name__ == '__main__':
     date_str = '20200416'
-    save_file = os.path.join(const.STATA_CODE_PATH, '{}_country_reg_code_1.do'.format(date_str))
+    save_file = os.path.join(const.STATA_CODE_PATH, '{}_country_reg_code_2.do'.format(date_str))
     output_path = os.path.join(const.STATA_RESULT_PATH, '{}_country_reg_code_1'.format(date_str))
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
@@ -34,11 +34,12 @@ if __name__ == '__main__':
 
     data_df: DataFrame = pd.read_stata(data_path)
     dep_keys = [i for i in data_df.keys() if
-                i.endswith("_1") and not i.startswith('formal') and not i.startswith('real')]
+                i.endswith("_1") and not i.startswith('formal') and not i.startswith('real') and i not in {
+                    'BUS_SCORE_1'}]
 
     for pre in ['formal', 'real']:
         output_file = os.path.join(output_path, 'country_result_{}.xls'.format(pre))
-        ind_vars = ['{}_{}_3'.format(pre, suf) for suf in ind_list]
+        ind_vars = ['{}_{}_post2'.format(pre, suf) for suf in ind_list]
         real_ctrl = ' '.join(c_ctrl_info)
 
         cmd_list.extend(
