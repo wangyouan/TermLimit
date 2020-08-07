@@ -17,8 +17,6 @@ from pandas import DataFrame
 
 from SortData.PreparePoliticsDataset import PathInfo as const
 
-CCODEALP_DICT = {'HAI': 'Haiti', 'GUA': 'Guatemala', 'HON': 'Honduras', }
-
 if __name__ == '__main__':
     # Quality of government data
     qog_df: DataFrame = pd.read_stata(os.path.join(const.DATA_PATH, 'qog_std_ts_jan20.dta'))
