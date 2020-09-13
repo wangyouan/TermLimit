@@ -23,10 +23,12 @@ if __name__ == '__main__':
     qog_useful_list = ['cname', 'year', 'ccodealp', 'aii_q10', 'gcb_pb', 'gir_acrl', 'iiag_rol', 'ti_cpi',
                        'vdem_corr', 'bti_ci', 'ucdp_type3', 'lp_legor', 'aii_q01', 'aii_q15', 'aii_q16', 'bti_foe',
                        'bti_rol', 'aii_q07', 'aii_q06', 'fh_rol', 'p_polity2', 'chga_demo', 'fh_status', 'sgi_qdrlc',
-                       'sgi_qdrl']
+                       'sgi_qdrl', 'van_comp', 'van_index', 'van_part', 'h_polcon3', 'vdem_exbribe', 'vdem_excrptps',
+                       'vdem_execorr', 'vdem_exembez', 'vdem_exthftps', 'vdem_mecorrpt', 'vdem_pubcorr', 'vdem_jucorrdc',
+                       'vdem_gcrrpt', 'ti_cpi_om']
 
     qog_useful_df: DataFrame = qog_df.loc[:, qog_useful_list].drop_duplicates(subset=['ccodealp', 'year'])
-    qog_useful_df.to_pickle(os.path.join(const.TEMP_PATH, '20200806_qog_useful_dataset.pkl'))
+    qog_useful_df.to_pickle(os.path.join(const.TEMP_PATH, '20200913_qog_useful_dataset.pkl'))
 
     # Pruge data
     purge_df: DataFrame = pd.read_stata(
@@ -43,10 +45,10 @@ if __name__ == '__main__':
          'TAJ': 'TJK', 'KZK': 'KAZ', 'BHU': 'BTN', 'BNG': 'BGD', 'MYA': 'MMR', 'SRI': 'LKA', 'NEP': 'NPL', 'THI': 'THA',
          'CAM': 'KHM', 'DRV': 'VNM', 'SIN': 'SGP', 'PHI': 'PHL', 'INS': 'IDN', 'DRC': 'COD', 'SWA': 'SWZ', 'SUD': 'SDN',
          'YPR': 'YEM', 'KYR': 'KGZ', 'ROK': 'KOR', 'MAL': 'MYS'})
-    purge_useful_df.to_pickle(os.path.join(const.TEMP_PATH, '20200806_purge_useful_dataset.pkl'))
+    purge_useful_df.to_pickle(os.path.join(const.TEMP_PATH, '20200913_purge_useful_dataset.pkl'))
 
     useful_df: DataFrame = purge_useful_df.merge(qog_useful_df, on=['ccodealp', 'year'], how='outer')
-    useful_df.to_pickle(os.path.join(const.TEMP_PATH, '20200806_purge_qog_merged.pkl'))
+    useful_df.to_pickle(os.path.join(const.TEMP_PATH, '20200913_purge_qog_merged.pkl'))
 
     # UCDP data
     ucdp_df: DataFrame = pd.read_csv(os.path.join(const.DATA_PATH, 'ucdp-nonstate-201.csv')).rename(
@@ -100,4 +102,4 @@ if __name__ == '__main__':
     ucdp_result_df2.to_pickle(os.path.join(const.TEMP_PATH, '20200806_ucdp_useful_data.pkl'))
 
     useful_df2: DataFrame = useful_df.merge(ucdp_result_df2, on=['cname', 'year'], how='outer')
-    useful_df2.to_pickle(os.path.join(const.TEMP_PATH, '20200807_purge_qog_ucdp_merged.pkl'))
+    useful_df2.to_pickle(os.path.join(const.TEMP_PATH, '20200913_purge_qog_ucdp_merged.pkl'))

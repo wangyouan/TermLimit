@@ -43,7 +43,7 @@ if __name__ == '__main__':
          'St Vincent Gr': 'St Vincent and the Grenadines', 'Trinidad Tob': 'Trinidad and Tobago',
          'Viet Nam': 'Vietnam', 'Yemen': 'Yemen, North', 'Zaire': 'Congo, Democratic Republic'})
 
-    useful_df2: DataFrame = pd.read_pickle(os.path.join(const.TEMP_PATH, '20200807_purge_qog_ucdp_merged.pkl'))
+    useful_df2: DataFrame = pd.read_pickle(os.path.join(const.TEMP_PATH, '20200913_purge_qog_ucdp_merged.pkl'))
     useful_df3: DataFrame = useful_df2.merge(reform_index_df, on=['cname', 'year'], how='left')
-    useful_df3.to_pickle(os.path.join(const.TEMP_PATH, '20200807_purge_qog_ucdp_reform_merged.pkl'))
-    useful_df3.to_csv(os.path.join(const.OUTPUT_PATH, '20200807_purge_qog_ucdp_reform_merged.csv'), index=False)
+    useful_df3.to_pickle(os.path.join(const.TEMP_PATH, '20200913_purge_qog_ucdp_reform_merged.pkl'))
+    useful_df3.to_csv(os.path.join(const.OUTPUT_PATH, '20200913_purge_qog_ucdp_reform_merged.csv'), index=False)
